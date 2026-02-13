@@ -1,18 +1,19 @@
 import { useEffect, useState } from 'react'
+import type { Runtime } from 'wuchale/runtime'
 import { registerLoaders } from 'wuchale/load-utils'
+// @ts-expect-error - generated at build time by wuchale
 import { loadCatalog, loadIDs } from './.wuchale/main.proxy.js'
 
 export const key = 'main'
-/** @type {{[loadID: string]: Set<Function>}} */
-const callbacks = {}
-const store = {}
+const callbacks: Record<string, Set<(runtime: Runtime) => void>> = {}
+const store: Record<string, Runtime | undefined> = {}
 
 // non-reactive
-export const getRuntime = (/** @type {string} */ loadID) => store[loadID]
+export const getRuntime = (loadID: string) => store[loadID]
 
 const collection = {
     get: getRuntime,
-    set: (/** @type {string} */ loadID, /** @type {import('wuchale/runtime').Runtime} */ runtime) => {
+    set: (loadID: string, runtime: Runtime) => {
         store[loadID] = runtime // for when useEffect hasn't run yet
         callbacks[loadID]?.forEach((cb) => {
             cb(runtime)
@@ -22,11 +23,11 @@ const collection = {
 
 registerLoaders(key, loadCatalog, loadIDs, collection)
 
-export const getRuntimeRx = (/** @type {string} */ loadID) => {
+export const getRuntimeRx = (loadID: string) => {
     // function to useState because runtime is a function too
     const [runtime, setRuntime] = useState(() => getRuntime(loadID))
     useEffect(() => {
-        const cb = (/** @type {import('wuchale/runtime').Runtime} */ runtime) => setRuntime(() => runtime)
+        const cb = (runtime: Runtime) => setRuntime(() => runtime)
         callbacks[loadID] ??= new Set()
         callbacks[loadID].add(cb)
         return () => callbacks[loadID].delete(cb)
