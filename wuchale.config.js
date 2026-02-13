@@ -6,7 +6,7 @@ export default defineConfig({
   ai: gemini({ apiKey: 'env' }),
   adapters: {
     main: jsx({
-      loader: 'react',
+      loader: 'custom',
       files: {
         include: ['src/**/*.{ts,tsx}'],
         ignore: ['**/*.d.ts'],
