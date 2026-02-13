@@ -1,0 +1,275 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-02-13T14:27:22.798Z\n"
+"PO-Revision-Date: 2026-02-13T14:27:22.798Z\n"
+"Last-Translator: \n"
+"Language: en\n"
+"Language-Team: \n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n == 1 ? 0 : 1;\n"
+"Source-Language: en\n"
+"MIME-Version: 1.0\n"
+
+#~ msgid "Daily Habits Tracker"
+#~ msgstr "Daily Habits Tracker"
+
+#: src/App.tsx
+msgid "Sunnah Habits Tracker"
+msgstr "Sunnah Habits Tracker"
+
+#: src/App.tsx
+msgid "Jummah Reminder"
+msgstr "Jummah Reminder"
+
+#: src/App.tsx
+msgid "Don't forget to read Surah Al-Kahf today!"
+msgstr "Don't forget to read Surah Al-Kahf today!"
+
+#: src/App.tsx
+msgid "Daily Progress"
+msgstr "Daily Progress"
+
+msgid "Five Daily Prayers"
+msgstr "Five Daily Prayers"
+
+#: src/App.tsx
+msgid "Fajr"
+msgstr "Fajr"
+
+#: src/App.tsx
+msgid "Dhuhr"
+msgstr "Dhuhr"
+
+#: src/App.tsx
+msgid "Asr"
+msgstr "Asr"
+
+#: src/App.tsx
+msgid "Maghrib"
+msgstr "Maghrib"
+
+#: src/App.tsx
+msgid "Isha"
+msgstr "Isha"
+
+#: src/App.tsx
+msgid "Toggle Fajr Sunnah"
+msgstr "Toggle Fajr Sunnah"
+
+#: src/App.tsx
+msgid "Fajr Sunnah (2 Before)"
+msgstr "Fajr Sunnah (2 Before)"
+
+#: src/App.tsx
+msgid "Toggle Dhuhr Sunnah"
+msgstr "Toggle Dhuhr Sunnah"
+
+#: src/App.tsx
+msgid "Dhuhr Sunnah (4 Before)"
+msgstr "Dhuhr Sunnah (4 Before)"
+
+#: src/App.tsx
+msgid "Dhuhr Sunnah (2 After)"
+msgstr "Dhuhr Sunnah (2 After)"
+
+#: src/App.tsx
+msgid "Toggle Maghrib Sunnah"
+msgstr "Toggle Maghrib Sunnah"
+
+#: src/App.tsx
+msgid "Maghrib Sunnah (2 After)"
+msgstr "Maghrib Sunnah (2 After)"
+
+#: src/App.tsx
+msgid "Toggle Isha Sunnah"
+msgstr "Toggle Isha Sunnah"
+
+#: src/App.tsx
+msgid "Isha Sunnah (2 After)"
+msgstr "Isha Sunnah (2 After)"
+
+#~ msgid "Daily Worship"
+#~ msgstr "Daily Worship"
+
+#~ msgid "Extra Sunnah Prayers"
+#~ msgstr "Extra Sunnah Prayers"
+
+#: src/App.tsx
+msgid "Duha Prayer"
+msgstr "Duha Prayer"
+
+#: src/App.tsx
+msgid "Tahajjud Prayer"
+msgstr "Tahajjud Prayer"
+
+#: src/App.tsx
+msgid "Witr Prayer"
+msgstr "Witr Prayer"
+
+#: src/App.tsx
+msgid "Daily Quran Reading"
+msgstr "Daily Quran Reading"
+
+#: src/App.tsx
+msgid "Daily Dhikr"
+msgstr "Daily Dhikr"
+
+#: src/App.tsx
+msgid "Toggle Dhikr options"
+msgstr "Toggle Dhikr options"
+
+#: src/App.tsx
+msgid "Morning Dhikr"
+msgstr "Morning Dhikr"
+
+#: src/App.tsx
+msgid "Evening Dhikr"
+msgstr "Evening Dhikr"
+
+#: src/App.tsx
+msgid "Before Sleeping Dhikr"
+msgstr "Before Sleeping Dhikr"
+
+#: src/App.tsx
+msgid "Daily Du'aa"
+msgstr "Daily Du'aa"
+
+#~ msgid "Optional Activities"
+#~ msgstr "Optional Activities"
+
+#: src/App.tsx
+msgid "Sadaqah"
+msgstr "Sadaqah"
+
+#: src/App.tsx
+msgid "Islamic Studies Time"
+msgstr "Islamic Studies Time"
+
+#: src/App.tsx
+msgid "Exercise Time"
+msgstr "Exercise Time"
+
+#: src/App.tsx
+msgid "Silat al-Rahim (Family Ties)"
+msgstr "Silat al-Rahim (Family Ties)"
+
+#: src/App.tsx
+msgid "Optional"
+msgstr "Optional"
+
+#~ msgid "May Allah accept your deeds"
+#~ msgstr "May Allah accept your deeds"
+
+#: src/App.tsx
+#: src/App.tsx
+msgid "Settings"
+msgstr "Settings"
+
+#: src/App.tsx
+msgid "Theme"
+msgstr "Theme"
+
+#: src/App.tsx
+msgid "Light"
+msgstr "Light"
+
+#: src/App.tsx
+msgid "Dark"
+msgstr "Dark"
+
+#: src/App.tsx
+msgid "Language"
+msgstr "Language"
+
+#: src/App.tsx
+msgid "English"
+msgstr "English"
+
+#: src/App.tsx
+msgid "Arabic"
+msgstr "Arabic"
+
+#: src/App.tsx
+msgid "Loading translations..."
+msgstr "Loading translations..."
+
+#~ msgid "بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ"
+#~ msgstr "بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ"
+
+#~ msgid "اللهم تقبل منا"
+#~ msgstr "اللهم تقبل منا"
+
+#: src/App.tsx
+msgid "<0/> Five Daily Prayers"
+msgstr "<0/> Five Daily Prayers"
+
+#~ msgid "بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْم"
+#~ msgstr "بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْم"
+
+#~ msgid "Sunnah"
+#~ msgstr "Sunnah"
+
+#~ msgid "May Allah Accept your deeds"
+#~ msgstr "May Allah Accept your deeds"
+
+#~ msgid "May Allah Accept Our deeds"
+#~ msgstr "May Allah Accept Our deeds"
+
+#: src/App.tsx
+msgid "May Allah Accept Our Deeds"
+msgstr "May Allah Accept Our Deeds"
+
+#: src/App.tsx
+msgid "Check Ummah News"
+msgstr "Check Ummah News"
+
+#: src/App.tsx
+msgid "Toggle Quran options"
+msgstr "Toggle Quran options"
+
+#: src/App.tsx
+msgid "Quran Reflection"
+msgstr "Quran Reflection"
+
+#: src/App.tsx
+msgid "Quran Memorization"
+msgstr "Quran Memorization"
+
+#: src/App.tsx
+msgid "Quran Recitation"
+msgstr "Quran Recitation"
+
+#: src/App.tsx
+msgid "Toggle Five Daily Prayers"
+msgstr "Toggle Five Daily Prayers"
+
+#: src/App.tsx
+msgid "Toggle Daily Worship"
+msgstr "Toggle Daily Worship"
+
+#: src/App.tsx
+msgid "Toggle Extra Sunnah Prayers"
+msgstr "Toggle Extra Sunnah Prayers"
+
+#: src/App.tsx
+msgid "Toggle Optional Activities"
+msgstr "Toggle Optional Activities"
+
+#: src/App.tsx
+msgid "<0/> Daily Worship"
+msgstr "<0/> Daily Worship"
+
+#: src/App.tsx
+msgid "<0/> Extra Sunnah Prayers"
+msgstr "<0/> Extra Sunnah Prayers"
+
+#: src/App.tsx
+msgid "<0/> Optional Activities"
+msgstr "<0/> Optional Activities"
+
+#: src/App.tsx
+msgid "Taqarub Progress"
+msgstr "Taqarub Progress"
