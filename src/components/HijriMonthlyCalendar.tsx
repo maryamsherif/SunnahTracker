@@ -446,7 +446,7 @@ const HijriMonthlyCalendar = ({
         {selectedMonthNumber === 12 && (
           <div className="flex items-center gap-2">
             <Heart className="h-3.5 w-3.5 fill-rose-500 text-rose-500 dark:fill-rose-400 dark:text-rose-400" />
-            <span>Eid al-Adha: 10th of Dhu al-Hijjah</span>
+            <span>Eid Al-Adha: 10th of Dhu al-Hijjah</span>
           </div>
         )}
       </div>
