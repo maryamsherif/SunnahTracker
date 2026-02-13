@@ -36,7 +36,9 @@ jobs:
         run: pnpm install
 
       - name: Generate catalogs
-        run: pnpm wuchale
+        run: |
+          mkdir -p src/locales/.wuchale
+          pnpm wuchale
 
       - name: Build
         run: pnpm build
