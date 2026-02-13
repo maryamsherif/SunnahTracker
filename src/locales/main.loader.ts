@@ -9,7 +9,7 @@ const callbacks: Record<string, Set<(runtime: Runtime) => void>> = {}
 const store: Record<string, Runtime | undefined> = {}
 
 // non-reactive
-export const getRuntime = (loadID: string) => store[loadID]
+export const getRuntime = (loadID: string) => store[loadID] as Runtime
 
 const collection = {
     get: getRuntime,
@@ -30,7 +30,9 @@ export const getRuntimeRx = (loadID: string) => {
         const cb = (runtime: Runtime) => setRuntime(() => runtime)
         callbacks[loadID] ??= new Set()
         callbacks[loadID].add(cb)
-        return () => callbacks[loadID].delete(cb)
+        return () => {
+            callbacks[loadID]?.delete(cb)
+        }
     }, [loadID])
     return runtime
 }
