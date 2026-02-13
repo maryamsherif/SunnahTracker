@@ -337,9 +337,7 @@ const HijriMonthlyCalendar = ({
               className={`flex aspect-square flex-col justify-between rounded-md border p-1.5 text-[11px] font-semibold shadow-sm sm:p-2.5 sm:text-xs ${
                 isToday
                   ? 'border-transparent bg-emerald-100 text-emerald-900 ring-2 ring-emerald-300/60 dark:border-transparent dark:bg-emerald-900/40 dark:text-emerald-100 dark:ring-emerald-400/40'
-                  : isWhiteDay
-                    ? 'border-amber-400 bg-white text-slate-600 ring-2 ring-amber-300/60 dark:border-amber-400/80 dark:bg-slate-900/70 dark:text-slate-200 dark:ring-amber-400/40'
-                    : 'border-slate-200 bg-white text-slate-600 dark:border-slate-700 dark:bg-slate-900/70 dark:text-slate-200'
+                  : 'border-slate-200 bg-white text-slate-600 dark:border-slate-700 dark:bg-slate-900/70 dark:text-slate-200'
               }`}
             >
               <div className="flex items-center justify-between">
