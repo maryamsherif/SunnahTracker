@@ -240,6 +240,90 @@ const IslamicHabitsTracker = () => {
     return dow === 1 || dow === 4;
   }, [today]);
   const showFastingSection = isWhiteDayToday || isMondayOrThursday;
+  const todaySpecialLabel = useMemo(() => {
+    if (hijriTodayParts.month === 12 && hijriTodayParts.day === 9) {
+      return 'Day of Arafah';
+    }
+    if (hijriTodayParts.month === 12 && hijriTodayParts.day === 10) {
+      return 'Eid al-Adha';
+    }
+    if (hijriTodayParts.month === 10 && hijriTodayParts.day === 1) {
+      return 'Eid al-Fitr';
+    }
+    if (hijriTodayParts.month === 1 && hijriTodayParts.day === 10) {
+      return 'Day of Ashura';
+    }
+
+    return null;
+  }, [hijriTodayParts]);
+  const todaySpecialDescription = useMemo(() => {
+    if (!todaySpecialLabel) {
+      return null;
+    }
+
+    if (todaySpecialLabel === 'Day of Arafah') {
+      return 'The 9th of Dhu al-Hijjah (the pinnacle of Hajj).';
+    }
+    if (todaySpecialLabel === 'Eid al-Adha') {
+      return 'The 10th of Dhu al-Hijjah (The Feast of Sacrifice).';
+    }
+    if (todaySpecialLabel === 'Eid al-Fitr') {
+      return 'The 1st of Shawwal (the month immediately following Ramadan).';
+    }
+    if (todaySpecialLabel === 'Day of Ashura') {
+      return 'The 10th of Muharram (the first month of the Hijri year).';
+    }
+
+    return null;
+  }, [todaySpecialLabel]);
+  const isDhulHijjahFirstTenToday = useMemo(
+    () => hijriTodayParts.month === 12 && hijriTodayParts.day <= 10,
+    [hijriTodayParts]
+  );
+  const isRamadanLastTenToday = useMemo(
+    () => hijriTodayParts.month === 9 && hijriTodayParts.day >= 21,
+    [hijriTodayParts]
+  );
+  const todayHighlights = useMemo(() => {
+    const items = [] as {
+      key: string;
+      icon: 'heart' | 'ten' | 'ramadan';
+      title: string;
+      description: string;
+    }[];
+
+    if (todaySpecialLabel && todaySpecialDescription) {
+      items.push({
+        key: 'special-day',
+        icon: 'heart',
+        title: todaySpecialLabel,
+        description: todaySpecialDescription,
+      });
+    }
+    if (isDhulHijjahFirstTenToday) {
+      items.push({
+        key: 'dhul-hijjah-first-ten',
+        icon: 'ten',
+        title: 'First 10 days of Dhu al-Hijjah',
+        description: 'The best days of the year.',
+      });
+    }
+    if (isRamadanLastTenToday) {
+      items.push({
+        key: 'ramadan-last-ten',
+        icon: 'ramadan',
+        title: 'Last 10 days of Ramadan',
+        description: 'The time to seek Laylat al-Qadr.',
+      });
+    }
+
+    return items;
+  }, [
+    isDhulHijjahFirstTenToday,
+    isRamadanLastTenToday,
+    todaySpecialDescription,
+    todaySpecialLabel,
+  ]);
 
   const getHabitsForDate = (date: Date) => {
     const localKey = getLocalDateKey(date);
@@ -515,6 +599,33 @@ const IslamicHabitsTracker = () => {
             <div className="inline-flex items-center justify-center rounded-full border border-emerald-200 bg-white/90 px-4 py-1 text-sm font-semibold text-emerald-800 shadow-sm dark:border-slate-700 dark:bg-slate-900/80 dark:text-emerald-200">
               {hijriTodayLabel}
             </div>
+            {todayHighlights.length > 0 && (
+              <div className="mt-3 flex flex-wrap justify-center gap-2">
+                {todayHighlights.map((item) => (
+                  <div
+                    key={item.key}
+                    className="flex items-center gap-2 rounded-full border border-emerald-200 bg-white/90 px-3 py-1 text-xs font-semibold text-emerald-800 shadow-sm dark:border-slate-700 dark:bg-slate-900/80 dark:text-emerald-200"
+                  >
+                    {item.icon === 'heart' && (
+                      <Heart className="h-3 w-3 fill-rose-500 text-rose-500 dark:fill-rose-400 dark:text-rose-400" />
+                    )}
+                    {item.icon === 'ten' && (
+                      <span className="flex h-4 w-6 items-center justify-center rounded-full bg-indigo-500/90 text-[9px] font-bold uppercase tracking-wide text-white shadow-sm dark:bg-indigo-400">
+                        10
+                      </span>
+                    )}
+                    {item.icon === 'ramadan' && (
+                      <span className="flex h-4 w-6 items-center justify-center rounded-full bg-sky-500/90 text-[9px] font-bold uppercase tracking-wide text-white shadow-sm dark:bg-sky-400">
+                        R
+                      </span>
+                    )}
+                    <span>
+                      {item.title}: {item.description}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            )}
             <div className="mt-4 flex justify-center">
               <div className="inline-flex rounded-full border border-emerald-200 bg-white/90 p-1 shadow-sm dark:border-slate-700 dark:bg-slate-900/80">
                 <button

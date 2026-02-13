@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Calendar } from 'lucide-react';
+import { Calendar, Heart } from 'lucide-react';
 
 type HijriMonthlyCalendarProps = {
   locale: 'en' | 'ar';
@@ -203,10 +203,32 @@ const HijriMonthlyCalendar = ({
     return formatter.format(selectedMonthStart);
   }, [hijriLocale, selectedMonthStart]);
 
+  const selectedMonthNumber = useMemo(
+    () => getHijriParts(selectedMonthStart).month,
+    [selectedMonthStart]
+  );
+
   const isSameLocalDate = (a: Date, b: Date) =>
     a.getFullYear() === b.getFullYear() &&
     a.getMonth() === b.getMonth() &&
     a.getDate() === b.getDate();
+
+  const specialDayLabel = (hijriMonth: number, hijriDay: number) => {
+    if (hijriMonth === 12 && hijriDay === 9) {
+      return 'Day of Arafah';
+    }
+    if (hijriMonth === 12 && hijriDay === 10) {
+      return 'Eid al-Adha';
+    }
+    if (hijriMonth === 10 && hijriDay === 1) {
+      return 'Eid al-Fitr';
+    }
+    if (hijriMonth === 1 && hijriDay === 10) {
+      return 'Day of Ashura';
+    }
+
+    return null;
+  };
 
   return (
     <div className="mb-6 rounded-lg bg-white p-6 shadow-lg dark:bg-slate-900/70">
@@ -297,11 +319,21 @@ const HijriMonthlyCalendar = ({
           const isWhiteDay =
             day.hijriMonth !== 9 &&
             (day.hijriDay === 13 || day.hijriDay === 14 || day.hijriDay === 15);
+          const specialLabel = specialDayLabel(day.hijriMonth, day.hijriDay);
+          const isDhulHijjahFirstTen =
+            day.hijriMonth === 12 && day.hijriDay >= 1 && day.hijriDay <= 10;
+          const isRamadanLastTen = day.hijriMonth === 9 && day.hijriDay >= 21;
+          const dhulHijjahDayCount = isDhulHijjahFirstTen ? day.hijriDay : null;
+          const ramadanDayCount = isRamadanLastTen ? day.hijriDay - 20 : null;
 
           return (
             <div
               key={day.date.toISOString()}
-              title={`Hijri day ${day.hijriDay}`}
+              title={
+                specialLabel
+                  ? `Hijri day ${day.hijriDay} - ${specialLabel}`
+                  : `Hijri day ${day.hijriDay}`
+              }
               className={`flex h-14 flex-col justify-between rounded-md border p-2 text-xs font-semibold shadow-sm ${
                 isToday
                   ? 'border-transparent bg-emerald-100 text-emerald-900 ring-2 ring-emerald-300/60 dark:border-transparent dark:bg-emerald-900/40 dark:text-emerald-100 dark:ring-emerald-400/40'
@@ -320,11 +352,29 @@ const HijriMonthlyCalendar = ({
                 >
                   {day.hijriDay}
                 </span>
-                {isWhiteDay && (
-                  <span className="flex h-4 w-6 items-center justify-center rounded-full bg-amber-500/90 text-[10px] font-bold text-white shadow-sm dark:bg-amber-400">
-                    Wh
-                  </span>
-                )}
+                <div className="flex items-center gap-1">
+                  {isDhulHijjahFirstTen && (
+                    <span className="flex h-4 w-6 items-center justify-center rounded-full bg-indigo-500/90 text-[9px] font-bold uppercase tracking-wide text-white shadow-sm dark:bg-indigo-400">
+                      {dhulHijjahDayCount}
+                    </span>
+                  )}
+                  {isRamadanLastTen && (
+                    <span className="flex h-4 w-6 items-center justify-center rounded-full bg-sky-500/90 text-[9px] font-bold uppercase tracking-wide text-white shadow-sm dark:bg-sky-400">
+                      {ramadanDayCount}
+                    </span>
+                  )}
+                  {isWhiteDay && (
+                    <span className="flex h-4 w-6 items-center justify-center rounded-full bg-amber-500/90 text-[10px] font-bold text-white shadow-sm dark:bg-amber-400">
+                      Wh
+                    </span>
+                  )}
+                  {specialLabel && (
+                    <Heart
+                      className="h-3.5 w-3.5 fill-rose-500 text-rose-500 dark:fill-rose-400 dark:text-rose-400"
+                      aria-label={specialLabel}
+                    />
+                  )}
+                </div>
               </div>
               <div className="space-y-1">
                 <div className="h-1.5 w-full overflow-hidden rounded-full bg-slate-200 dark:bg-slate-800">
@@ -353,15 +403,54 @@ const HijriMonthlyCalendar = ({
           <span className="h-2 w-6 rounded-full bg-gradient-to-r from-amber-400 to-rose-400/90" />
           <span>Taqarrub habits</span>
         </div>
-        <div className="flex items-center gap-2">
-          <span className="flex h-4 w-6 items-center justify-center rounded-full bg-amber-500/90 text-[10px] font-bold text-white shadow-sm dark:bg-amber-400">
-            Wh
-          </span>
-          <span>13th-15th (White Days for fasting)</span>
-        </div>
-        <div className="text-slate-500 dark:text-slate-400">
-          Bar length shows daily completion.
-        </div>
+        {selectedMonthNumber !== 9 && (
+          <div className="flex items-center gap-2">
+            <span className="flex h-4 w-6 items-center justify-center rounded-full bg-amber-500/90 text-[10px] font-bold text-white shadow-sm dark:bg-amber-400">
+              Wh
+            </span>
+            <span>13th-15th (White Days for fasting)</span>
+          </div>
+        )}
+        {selectedMonthNumber === 12 && (
+          <div className="flex items-center gap-2">
+            <span className="flex h-4 w-8 items-center justify-center rounded-full bg-indigo-500/90 text-[9px] font-bold uppercase tracking-wide text-white shadow-sm dark:bg-indigo-400">
+              1-10
+            </span>
+            <span>First 10 days of Dhu al-Hijjah: The best days of the year</span>
+          </div>
+        )}
+        {selectedMonthNumber === 9 && (
+          <div className="flex items-center gap-2">
+            <span className="flex h-4 w-8 items-center justify-center rounded-full bg-sky-500/90 text-[9px] font-bold uppercase tracking-wide text-white shadow-sm dark:bg-sky-400">
+              1-10
+            </span>
+            <span>Last 10 days of Ramadan: The time to seek Laylat al-Qadr</span>
+          </div>
+        )}
+        {selectedMonthNumber === 1 && (
+          <div className="flex items-center gap-2">
+            <Heart className="h-3.5 w-3.5 fill-rose-500 text-rose-500 dark:fill-rose-400 dark:text-rose-400" />
+            <span>Day of Ashura: 10th of Muharram</span>
+          </div>
+        )}
+        {selectedMonthNumber === 10 && (
+          <div className="flex items-center gap-2">
+            <Heart className="h-3.5 w-3.5 fill-rose-500 text-rose-500 dark:fill-rose-400 dark:text-rose-400" />
+            <span>Eid al-Fitr: 1st of Shawwal (after Ramadan)</span>
+          </div>
+        )}
+        {selectedMonthNumber === 12 && (
+          <div className="flex items-center gap-2">
+            <Heart className="h-3.5 w-3.5 fill-rose-500 text-rose-500 dark:fill-rose-400 dark:text-rose-400" />
+            <span>Day of Arafah: 9th of Dhu al-Hijjah</span>
+          </div>
+        )}
+        {selectedMonthNumber === 12 && (
+          <div className="flex items-center gap-2">
+            <Heart className="h-3.5 w-3.5 fill-rose-500 text-rose-500 dark:fill-rose-400 dark:text-rose-400" />
+            <span>Eid al-Adha: 10th of Dhu al-Hijjah</span>
+          </div>
+        )}
       </div>
     </div>
   );

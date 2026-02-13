@@ -303,9 +303,8 @@ msgstr "Required habits"
 #~ msgid "Taqarub habits"
 #~ msgstr "Taqarub habits"
 
-#: src/components/HijriMonthlyCalendar.tsx
-msgid "Bar length shows daily completion."
-msgstr "Bar length shows daily completion."
+#~ msgid "Bar length shows daily completion."
+#~ msgstr "Bar length shows daily completion."
 
 #: src/components/HijriMonthlyCalendar.tsx
 msgid "Taqarrub habits"
@@ -393,3 +392,114 @@ msgstr "Reason: Monday/Thursday."
 
 #~ msgid "Testing mode: Showing the section even though today has no scheduled fasting reason."
 #~ msgstr "Testing mode: Showing the section even though today has no scheduled fasting reason."
+
+#: src/App.tsx
+#: src/App.tsx
+#: src/components/HijriMonthlyCalendar.tsx
+msgid "Day of Arafah"
+msgstr "Day of Arafah"
+
+#: src/App.tsx
+#: src/App.tsx
+#: src/components/HijriMonthlyCalendar.tsx
+msgid "Eid al-Adha"
+msgstr "Eid al-Adha"
+
+#: src/App.tsx
+#: src/App.tsx
+#: src/components/HijriMonthlyCalendar.tsx
+msgid "Eid al-Fitr"
+msgstr "Eid al-Fitr"
+
+#: src/App.tsx
+#: src/App.tsx
+#: src/components/HijriMonthlyCalendar.tsx
+msgid "Day of Ashura"
+msgstr "Day of Ashura"
+
+#. placeholder {0}: day.hijriDay
+#. placeholder {1}: specialLabel
+#: src/components/HijriMonthlyCalendar.tsx
+msgid "Hijri day {0} - {1}"
+msgstr "Hijri day {0} - {1}"
+
+#: src/components/HijriMonthlyCalendar.tsx
+msgid "Day of Ashura: 10th of Muharram"
+msgstr "Day of Ashura: 10th of Muharram"
+
+#: src/components/HijriMonthlyCalendar.tsx
+msgid "Eid al-Fitr: 1st of Shawwal (after Ramadan)"
+msgstr "Eid al-Fitr: 1st of Shawwal (after Ramadan)"
+
+#: src/components/HijriMonthlyCalendar.tsx
+msgid "Day of Arafah: 9th of Dhu al-Hijjah"
+msgstr "Day of Arafah: 9th of Dhu al-Hijjah"
+
+#: src/components/HijriMonthlyCalendar.tsx
+msgid "Eid al-Adha: 10th of Dhu al-Hijjah"
+msgstr "Eid al-Adha: 10th of Dhu al-Hijjah"
+
+#: src/App.tsx
+msgid "R"
+msgstr "R"
+
+#: src/App.tsx
+msgid "First 10 days of Dhu al-Hijjah"
+msgstr "First 10 days of Dhu al-Hijjah"
+
+#~ msgid "Last 10 days of Ramadan (from 21st)"
+#~ msgstr "Last 10 days of Ramadan (from 21st)"
+
+#: src/components/HijriMonthlyCalendar.tsx
+msgid "First 10 days of Dhu al-Hijjah: The best days of the year"
+msgstr "First 10 days of Dhu al-Hijjah: The best days of the year"
+
+#: src/components/HijriMonthlyCalendar.tsx
+msgid "Last 10 days of Ramadan: The time to seek Laylat al-Qadr"
+msgstr "Last 10 days of Ramadan: The time to seek Laylat al-Qadr"
+
+#~ msgid "Arafah"
+#~ msgstr "Arafah"
+
+#~ msgid "Ashura"
+#~ msgstr "Ashura"
+
+#~ msgid "First 10"
+#~ msgstr "First 10"
+
+#~ msgid "Last 10"
+#~ msgstr "Last 10"
+
+#: src/App.tsx
+msgid "The 9th of Dhu al-Hijjah (the pinnacle of Hajj)."
+msgstr "The 9th of Dhu al-Hijjah (the pinnacle of Hajj)."
+
+#: src/App.tsx
+msgid "The 10th of Dhu al-Hijjah (The Feast of Sacrifice)."
+msgstr "The 10th of Dhu al-Hijjah (The Feast of Sacrifice)."
+
+#: src/App.tsx
+msgid "The 1st of Shawwal (the month immediately following Ramadan)."
+msgstr "The 1st of Shawwal (the month immediately following Ramadan)."
+
+#: src/App.tsx
+msgid "The 10th of Muharram (the first month of the Hijri year)."
+msgstr "The 10th of Muharram (the first month of the Hijri year)."
+
+#: src/App.tsx
+msgid "The best days of the year."
+msgstr "The best days of the year."
+
+#: src/App.tsx
+msgid "Last 10 days of Ramadan"
+msgstr "Last 10 days of Ramadan"
+
+#: src/App.tsx
+msgid "The time to seek Laylat al-Qadr."
+msgstr "The time to seek Laylat al-Qadr."
+
+#~ msgid "Today"
+#~ msgstr "Today"
+
+#~ msgid "Additional info: Bar length shows daily completion."
+#~ msgstr "Additional info: Bar length shows daily completion."
