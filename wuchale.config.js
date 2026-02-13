@@ -3,7 +3,7 @@ import { adapter as jsx } from '@wuchale/jsx';
 
 export default defineConfig({
   locales: ['en', 'ar'],
-  ai: gemini({ apiKey: 'env' }),
+  ai: gemini({ apiKey: 'env', batchSize: 100, parallel: 1 }),
   adapters: {
     main: jsx({
       loader: 'custom',

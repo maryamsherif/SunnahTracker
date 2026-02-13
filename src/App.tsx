@@ -16,6 +16,7 @@ import {
   Users,
 } from 'lucide-react';
 import { loadLocale } from 'wuchale/load-utils';
+import HijriMonthlyCalendar from './components/HijriMonthlyCalendar';
 import './locales/main.loader';
 
 type Habits = {
@@ -45,6 +46,7 @@ type Habits = {
   exercise: boolean;
   silatRahim: boolean;
   ummahNews: boolean;
+  voluntaryFasting: boolean;
 };
 
 const defaultHabits: Habits = {
@@ -74,6 +76,7 @@ const defaultHabits: Habits = {
   exercise: false,
   silatRahim: false,
   ummahNews: false,
+  voluntaryFasting: false,
 };
 
 const requiredHabits: (keyof Habits)[] = [
@@ -106,14 +109,59 @@ const optionalHabits: (keyof Habits)[] = [
   'exercise',
   'silatRahim',
   'ummahNews',
+  'voluntaryFasting',
 ];
 
 type Theme = 'light' | 'dark';
 type Locale = 'en' | 'ar';
 
-const getTodayKey = () => {
-  const today = new Date().toISOString().split('T')[0];
-  return `habits:${today}`;
+const hijriNumberFormatter = new Intl.DateTimeFormat(
+  'en-u-ca-islamic-umalqura',
+  {
+    day: 'numeric',
+    month: 'numeric',
+    year: 'numeric',
+  }
+);
+
+const getHijriParts = (date: Date) => {
+  const parts = hijriNumberFormatter.formatToParts(date);
+  const dayPart = parts.find((part) => part.type === 'day');
+  const monthPart = parts.find((part) => part.type === 'month');
+  const yearPart = parts.find((part) => part.type === 'year');
+
+  return {
+    day: dayPart ? Number(dayPart.value) : 1,
+    month: monthPart ? Number(monthPart.value) : 1,
+    year: yearPart ? Number(yearPart.value) : 1,
+  };
+};
+
+const getLocalDateKey = (date: Date) => {
+  const year = date.getFullYear();
+  const month = `${date.getMonth() + 1}`.padStart(2, '0');
+  const day = `${date.getDate()}`.padStart(2, '0');
+  return `habits:${year}-${month}-${day}`;
+};
+
+const getLegacyDateKey = (date: Date) => {
+  const isoDate = date.toISOString().split('T')[0];
+  return `habits:${isoDate}`;
+};
+
+const getTodayKey = () => getLocalDateKey(new Date());
+
+const parseHabitsRecord = (stored: string | null): Habits | null => {
+  if (!stored) {
+    return null;
+  }
+
+  try {
+    const parsed = JSON.parse(stored) as Partial<Habits>;
+    return { ...defaultHabits, ...parsed };
+  } catch {
+    return null;
+  }
 };
 
 const THEME_STORAGE_KEY = 'sunnah:theme';
@@ -153,22 +201,71 @@ const IslamicHabitsTracker = () => {
   const [expandedPrayer, setExpandedPrayer] = useState<string | null>(null);
   const [quranExpanded, setQuranExpanded] = useState(false);
   const [dhikrExpanded, setDhikrExpanded] = useState(false);
+  const [activeView, setActiveView] = useState<'habits' | 'calendar'>('habits');
   const [sectionsOpen, setSectionsOpen] = useState({
     prayers: false,
     worship: false,
     extra: false,
     optional: false,
   });
+  const today = useMemo(() => new Date(), []);
+  const hijriLocale = useMemo(
+    () =>
+      locale === 'ar'
+        ? 'ar-SA-u-ca-islamic-umalqura'
+        : 'en-u-ca-islamic-umalqura',
+    [locale]
+  );
+  const hijriTodayLabel = useMemo(() => {
+    const formatter = new Intl.DateTimeFormat(hijriLocale, {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    });
+    return formatter.format(today);
+  }, [hijriLocale, today]);
+  const hijriTodayParts = useMemo(() => getHijriParts(today), [today]);
+  const isWhiteDayToday = useMemo(() => {
+    if (hijriTodayParts.month === 9) {
+      return false;
+    }
+    return (
+      hijriTodayParts.day === 13 ||
+      hijriTodayParts.day === 14 ||
+      hijriTodayParts.day === 15
+    );
+  }, [hijriTodayParts]);
+  const isMondayOrThursday = useMemo(() => {
+    const dow = today.getDay();
+    return dow === 1 || dow === 4;
+  }, [today]);
+  const showFastingSection = isWhiteDayToday || isMondayOrThursday;
+
+  const getHabitsForDate = (date: Date) => {
+    const localKey = getLocalDateKey(date);
+    const localHabits = parseHabitsRecord(localStorage.getItem(localKey));
+    if (localHabits) {
+      return localHabits;
+    }
+
+    const legacyHabits = parseHabitsRecord(
+      localStorage.getItem(getLegacyDateKey(date))
+    );
+    if (legacyHabits) {
+      try {
+        localStorage.setItem(localKey, JSON.stringify(legacyHabits));
+      } catch {
+        // Ignore storage errors (private mode, quota, etc.)
+      }
+    }
+
+    return legacyHabits;
+  };
 
   useEffect(() => {
-    const stored = localStorage.getItem(getTodayKey());
-    if (stored) {
-      try {
-        const parsed = JSON.parse(stored) as Habits;
-        setHabits({ ...defaultHabits, ...parsed });
-      } catch {
-        setHabits(defaultHabits);
-      }
+    const storedHabits = getHabitsForDate(new Date());
+    if (storedHabits) {
+      setHabits(storedHabits);
     }
 
     const today = new Date().getDay();
@@ -340,7 +437,7 @@ const IslamicHabitsTracker = () => {
               <Settings className="h-5 w-5" />
             </button>
             {settingsOpen && (
-              <div className="absolute right-0 mt-3 w-64 rounded-xl border border-emerald-100 bg-white/95 p-4 shadow-xl backdrop-blur dark:border-slate-700 dark:bg-slate-900/95">
+              <div className="absolute right-0 z-50 mt-3 w-64 rounded-xl border border-emerald-100 bg-white/95 p-4 shadow-xl backdrop-blur dark:border-slate-700 dark:bg-slate-900/95">
                 <div className="mb-3 text-sm font-semibold text-emerald-900 dark:text-emerald-100">
                   Settings
                 </div>
@@ -415,10 +512,41 @@ const IslamicHabitsTracker = () => {
             <h1 className="mb-2 text-4xl font-bold text-emerald-900 dark:text-emerald-100">
               Sunnah Habits Tracker
             </h1>
+            <div className="inline-flex items-center justify-center rounded-full border border-emerald-200 bg-white/90 px-4 py-1 text-sm font-semibold text-emerald-800 shadow-sm dark:border-slate-700 dark:bg-slate-900/80 dark:text-emerald-200">
+              {hijriTodayLabel}
+            </div>
+            <div className="mt-4 flex justify-center">
+              <div className="inline-flex rounded-full border border-emerald-200 bg-white/90 p-1 shadow-sm dark:border-slate-700 dark:bg-slate-900/80">
+                <button
+                  type="button"
+                  onClick={() => setActiveView('habits')}
+                  aria-pressed={activeView === 'habits'}
+                  className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
+                    activeView === 'habits'
+                      ? 'bg-emerald-600 text-white'
+                      : 'text-emerald-700 hover:bg-emerald-50 dark:text-emerald-200 dark:hover:bg-slate-800'
+                  }`}
+                >
+                  Habits
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setActiveView('calendar')}
+                  aria-pressed={activeView === 'calendar'}
+                  className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
+                    activeView === 'calendar'
+                      ? 'bg-emerald-600 text-white'
+                      : 'text-emerald-700 hover:bg-emerald-50 dark:text-emerald-200 dark:hover:bg-slate-800'
+                  }`}
+                >
+                  Calendar
+                </button>
+              </div>
+            </div>
           </div>
         </div>
 
-        {showKahfReminder && (
+        {activeView === 'habits' && showKahfReminder && (
           <div className="mb-6 rounded-lg border-2 border-amber-400 bg-gradient-to-r from-amber-100 to-yellow-100 p-4 shadow-md dark:border-amber-500/60 dark:from-amber-900/50 dark:to-yellow-900/40">
             <div className="flex items-center gap-3">
               <Heart className="h-6 w-6 text-amber-700 dark:text-amber-300" />
@@ -434,37 +562,75 @@ const IslamicHabitsTracker = () => {
           </div>
         )}
 
-        <div className="mb-6 rounded-lg bg-white p-6 shadow-lg dark:bg-slate-900/70">
-          <div className="mb-3 flex items-center justify-between">
-            <span className="font-medium text-gray-700 dark:text-slate-200">
-              Daily Progress
-            </span>
-            <span className="text-2xl font-bold text-emerald-600 dark:text-emerald-300">
-              {progress}%
-            </span>
-          </div>
-          <div className="h-3 w-full rounded-full bg-gray-200 dark:bg-slate-800">
-            <div
-              className="h-3 rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 transition-all duration-500"
-              style={{ width: `${progress}%` }}
-            />
-          </div>
-          <div className="mt-4">
-            <div className="mb-2 flex items-center justify-between text-xs text-slate-500 dark:text-slate-300">
-              <div className="flex items-center gap-2">
-                <Plus className="h-3 w-3" />
-                <span>Taqarub Progress</span>
+        {activeView === 'calendar' && (
+          <HijriMonthlyCalendar
+            locale={locale}
+            requiredHabits={requiredHabits}
+            optionalHabits={optionalHabits}
+            getHabitsForDate={getHabitsForDate}
+          />
+        )}
+
+        {activeView === 'habits' && (
+          <>
+            <div className="mb-6 rounded-lg bg-white p-6 shadow-lg dark:bg-slate-900/70">
+              <div className="mb-3 flex items-center justify-between">
+                <span className="font-medium text-gray-700 dark:text-slate-200">
+                  Daily Progress
+                </span>
+                <span className="text-2xl font-bold text-emerald-600 dark:text-emerald-300">
+                  {progress}%
+                </span>
               </div>
-              <span>{optionalProgress}%</span>
+              <div className="h-3 w-full rounded-full bg-gray-200 dark:bg-slate-800">
+                <div
+                  className="h-3 rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 transition-all duration-500"
+                  style={{ width: `${progress}%` }}
+                />
+              </div>
+              <div className="mt-4">
+                <div className="mb-2 flex items-center justify-between text-xs text-slate-500 dark:text-slate-300">
+                  <div className="flex items-center gap-2">
+                    <Plus className="h-3 w-3" />
+                    <span>Taqarrub Progress</span>
+                  </div>
+                  <span>{optionalProgress}%</span>
+                </div>
+                <div className="h-2 w-full rounded-full bg-gray-200 dark:bg-slate-800">
+                  <div
+                    className="h-2 rounded-full bg-gradient-to-r from-amber-400 to-rose-400/90 transition-all duration-500"
+                    style={{ width: `${optionalProgress}%` }}
+                  />
+                </div>
+              </div>
             </div>
-            <div className="h-2 w-full rounded-full bg-gray-200 dark:bg-slate-800">
-              <div
-                className="h-2 rounded-full bg-gradient-to-r from-amber-400 to-rose-400/90 transition-all duration-500"
-                style={{ width: `${optionalProgress}%` }}
-              />
-            </div>
-          </div>
-        </div>
+
+            {showFastingSection && (
+              <div className="mb-6 rounded-lg border border-amber-200 bg-amber-50 p-5 shadow-md dark:border-amber-500/50 dark:bg-amber-900/30">
+                <div className="mb-3 flex items-center justify-between">
+                  <h2 className="text-base font-semibold text-amber-900 dark:text-amber-100">
+                    Voluntary Fasting
+                  </h2>
+                  <span className="text-xs text-amber-700 dark:text-amber-200">
+                    Optional
+                  </span>
+                </div>
+                <div className="mb-3 text-sm text-amber-800 dark:text-amber-200">
+                  {isWhiteDayToday && isMondayOrThursday
+                    ? 'Reason: White Days (13th-15th, except Ramadan) and Monday/Thursday.'
+                    : isWhiteDayToday
+                      ? 'Reason: White Days (13th-15th, except Ramadan).'
+                      : 'Reason: Monday/Thursday.'}
+                </div>
+                <HabitItem
+                  name="voluntaryFasting"
+                  label="Mark if you fasted today"
+                  icon={Moon}
+                  isOptional
+                  compact
+                />
+              </div>
+            )}
 
         <div className="mb-6 rounded-lg bg-white p-6 shadow-lg dark:bg-slate-900/70">
           <div className="mb-4 flex items-center justify-between">
@@ -839,6 +1005,9 @@ const IslamicHabitsTracker = () => {
             </div>
           )}
         </div>
+
+          </>
+        )}
 
         <div className="pb-6 text-center text-sm text-gray-600 dark:text-slate-300">
           <p className="mb-2">May Allah Accept Our Deeds</p>

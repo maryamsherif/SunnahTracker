@@ -157,6 +157,7 @@ msgid "Silat al-Rahim (Family Ties)"
 msgstr "Silat al-Rahim (Family Ties)"
 
 #: src/App.tsx
+#: src/App.tsx
 msgid "Optional"
 msgstr "Optional"
 
@@ -270,6 +271,125 @@ msgstr "<0/> Extra Sunnah Prayers"
 msgid "<0/> Optional Activities"
 msgstr "<0/> Optional Activities"
 
+#~ msgid "Taqarub Progress"
+#~ msgstr "Taqarub Progress"
+
+#~ msgid "Monthly Progress (Hijri)"
+#~ msgstr "Monthly Progress (Hijri)"
+
+#. placeholder {0}: day.hijriDay
+#: src/components/HijriMonthlyCalendar.tsx
+msgid "Hijri day {0}"
+msgstr "Hijri day {0}"
+
+#~ msgid "Color shows completion of required habits for each day."
+#~ msgstr "Color shows completion of required habits for each day."
+
 #: src/App.tsx
-msgid "Taqarub Progress"
-msgstr "Taqarub Progress"
+msgid "Habits"
+msgstr "Habits"
+
+#: src/App.tsx
+msgid "Calendar"
+msgstr "Calendar"
+
+#~ msgid "0% or no data"
+#~ msgstr "0% or no data"
+
+#: src/components/HijriMonthlyCalendar.tsx
+msgid "Required habits"
+msgstr "Required habits"
+
+#~ msgid "Taqarub habits"
+#~ msgstr "Taqarub habits"
+
+#: src/components/HijriMonthlyCalendar.tsx
+msgid "Bar length shows daily completion."
+msgstr "Bar length shows daily completion."
+
+#: src/components/HijriMonthlyCalendar.tsx
+msgid "Taqarrub habits"
+msgstr "Taqarrub habits"
+
+#: src/App.tsx
+msgid "Taqarrub Progress"
+msgstr "Taqarrub Progress"
+
+#~ msgid "Hijri Month"
+#~ msgstr "Hijri Month"
+
+#~ msgid "Select Hijri month"
+#~ msgstr "Select Hijri month"
+
+#~ msgid "Select Hijri year"
+#~ msgstr "Select Hijri year"
+
+#: src/components/HijriMonthlyCalendar.tsx
+msgid "Previous hijri year"
+msgstr "Previous hijri year"
+
+#: src/components/HijriMonthlyCalendar.tsx
+msgid "Next hijri year"
+msgstr "Next hijri year"
+
+#~ msgid "v"
+#~ msgstr "v"
+
+#~ msgid "Fasting"
+#~ msgstr "Fasting"
+
+#~ msgid "13th-15th (non-Ramadan)"
+#~ msgstr "13th-15th (non-Ramadan)"
+
+#~ msgid "13th-15th (White Days)"
+#~ msgstr "13th-15th (White Days)"
+
+#~ msgid "F"
+#~ msgstr "F"
+
+#: src/components/HijriMonthlyCalendar.tsx
+#: src/components/HijriMonthlyCalendar.tsx
+msgid "Wh"
+msgstr "Wh"
+
+#: src/components/HijriMonthlyCalendar.tsx
+msgid "13th-15th (White Days for fasting)"
+msgstr "13th-15th (White Days for fasting)"
+
+#: src/App.tsx
+msgid "Voluntary Fasting"
+msgstr "Voluntary Fasting"
+
+#~ msgid "Today is a White Day and also Monday/Thursday."
+#~ msgstr "Today is a White Day and also Monday/Thursday."
+
+#~ msgid "Today is a White Day (13th-15th)."
+#~ msgstr "Today is a White Day (13th-15th)."
+
+#~ msgid "Today is Monday/Thursday."
+#~ msgstr "Today is Monday/Thursday."
+
+#~ msgid "Testing mode: Today is not a scheduled fasting day."
+#~ msgstr "Testing mode: Today is not a scheduled fasting day."
+
+#~ msgid "Today is a White Day (13th-15th, except Ramadan)."
+#~ msgstr "Today is a White Day (13th-15th, except Ramadan)."
+
+#: src/App.tsx
+msgid "Mark if you fasted today"
+msgstr "Mark if you fasted today"
+
+#: src/App.tsx
+msgid "Reason: White Days (13th-15th, except Ramadan) and Monday/Thursday."
+msgstr "Reason: White Days (13th-15th, except Ramadan) and Monday/Thursday."
+
+#: src/App.tsx
+msgid "Reason: White Days (13th-15th, except Ramadan)."
+msgstr "Reason: White Days (13th-15th, except Ramadan)."
+
+#: src/App.tsx
+msgid "Reason: Monday/Thursday."
+msgstr "Reason: Monday/Thursday."
+
+#~ msgid "Testing mode: Showing the section even though today has no scheduled fasting reason."
+#~ msgstr "Testing mode: Showing the section even though today has no scheduled fasting reason."
