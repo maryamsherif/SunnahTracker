@@ -79,7 +79,7 @@ const defaultHabits: Habits = {
   voluntaryFasting: false,
 };
 
-const requiredHabits: (keyof Habits)[] = [
+const mainHabits: (keyof Habits)[] = [
   'fajr',
   'dhuhr',
   'asr',
@@ -403,8 +403,8 @@ const IslamicHabitsTracker = () => {
   };
 
   const progress = useMemo(() => {
-    const completed = requiredHabits.filter((habit) => habits[habit]).length;
-    return Math.round((completed / requiredHabits.length) * 100);
+    const completed = mainHabits.filter((habit) => habits[habit]).length;
+    return Math.round((completed / mainHabits.length) * 100);
   }, [habits]);
 
   const optionalProgress = useMemo(() => {
@@ -676,7 +676,7 @@ const IslamicHabitsTracker = () => {
         {activeView === 'calendar' && (
           <HijriMonthlyCalendar
             locale={locale}
-            requiredHabits={requiredHabits}
+            mainHabits={mainHabits}
             optionalHabits={optionalHabits}
             getHabitsForDate={getHabitsForDate}
           />

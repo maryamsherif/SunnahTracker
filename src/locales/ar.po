@@ -299,9 +299,8 @@ msgstr "التقويم"
 #~ msgid "0% or no data"
 #~ msgstr "0% أو لا توجد بيانات"
 
-#: src/components/HijriMonthlyCalendar.tsx
-msgid "Required habits"
-msgstr "العادات المطلوبة"
+#~ msgid "Required habits"
+#~ msgstr "العادات المطلوبة"
 
 #~ msgid "Taqarub habits"
 #~ msgstr "عادات التقرب"
@@ -506,3 +505,7 @@ msgstr "وقت تحري ليلة القدر."
 
 #~ msgid "Additional info: Bar length shows daily completion."
 #~ msgstr ""
+
+#: src/components/HijriMonthlyCalendar.tsx
+msgid "Main habits"
+msgstr ""

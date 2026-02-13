@@ -296,9 +296,8 @@ msgstr "Calendar"
 #~ msgid "0% or no data"
 #~ msgstr "0% or no data"
 
-#: src/components/HijriMonthlyCalendar.tsx
-msgid "Required habits"
-msgstr "Required habits"
+#~ msgid "Required habits"
+#~ msgstr "Required habits"
 
 #~ msgid "Taqarub habits"
 #~ msgstr "Taqarub habits"
@@ -503,3 +502,7 @@ msgstr "The time to seek Laylat al-Qadr."
 
 #~ msgid "Additional info: Bar length shows daily completion."
 #~ msgstr "Additional info: Bar length shows daily completion."
+
+#: src/components/HijriMonthlyCalendar.tsx
+msgid "Main habits"
+msgstr "Main habits"

@@ -3,7 +3,7 @@ import { Calendar, Heart } from 'lucide-react';
 
 type HijriMonthlyCalendarProps = {
   locale: 'en' | 'ar';
-  requiredHabits: string[];
+  mainHabits: string[];
   optionalHabits: string[];
   getHabitsForDate: (date: Date) => Record<string, boolean> | null;
 };
@@ -62,7 +62,7 @@ const getHijriYearStart = (targetYear: number, anchor: Date) => {
 
 const HijriMonthlyCalendar = ({
   locale,
-  requiredHabits,
+  mainHabits,
   optionalHabits,
   getHabitsForDate,
 }: HijriMonthlyCalendarProps) => {
@@ -155,11 +155,11 @@ const HijriMonthlyCalendar = ({
       let optionalProgressValue: number | null = null;
 
       if (habitsForDay) {
-        const completed = requiredHabits.filter(
+        const completed = mainHabits.filter(
           (habit) => habitsForDay[habit]
         ).length;
         requiredProgressValue = Math.round(
-          (completed / requiredHabits.length) * 100
+          (completed / mainHabits.length) * 100
         );
 
         if (optionalHabits.length > 0) {
@@ -189,7 +189,7 @@ const HijriMonthlyCalendar = ({
     getHabitsForDate,
     hijriYearData.monthStarts,
     optionalHabits,
-    requiredHabits,
+    mainHabits,
     selectedMonth,
     selectedMonthStart,
     selectedYear,
@@ -298,17 +298,17 @@ const HijriMonthlyCalendar = ({
           )}
         </div>
       </div>
-      <div className="mb-3 grid grid-cols-7 gap-2 text-center text-xs text-slate-500 dark:text-slate-400">
+      <div className="mb-3 hidden grid-cols-7 gap-2 text-center text-xs text-slate-500 sm:grid dark:text-slate-400">
         {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((label) => (
           <span key={label}>{label}</span>
         ))}
       </div>
-      <div className="grid grid-cols-7 gap-3">
+      <div className="grid grid-cols-5 gap-1 sm:grid-cols-7 sm:gap-3">
         {Array.from({ length: monthlyHijriData.startWeekday }).map(
           (_, index) => (
             <div
               key={`spacer-${index}`}
-              className="h-14 rounded-md bg-transparent"
+              className="aspect-square rounded-md bg-transparent"
             />
           )
         )}
@@ -334,7 +334,7 @@ const HijriMonthlyCalendar = ({
                   ? `Hijri day ${day.hijriDay} - ${specialLabel}`
                   : `Hijri day ${day.hijriDay}`
               }
-              className={`flex h-14 flex-col justify-between rounded-md border p-2 text-xs font-semibold shadow-sm ${
+              className={`flex aspect-square flex-col justify-between rounded-md border p-1.5 text-[11px] font-semibold shadow-sm sm:p-2.5 sm:text-xs ${
                 isToday
                   ? 'border-transparent bg-emerald-100 text-emerald-900 ring-2 ring-emerald-300/60 dark:border-transparent dark:bg-emerald-900/40 dark:text-emerald-100 dark:ring-emerald-400/40'
                   : isWhiteDay
@@ -344,7 +344,7 @@ const HijriMonthlyCalendar = ({
             >
               <div className="flex items-center justify-between">
                 <span
-                  className={`text-sm font-semibold ${
+                  className={`text-[12px] font-semibold sm:text-base ${
                     isToday
                       ? 'text-emerald-900 dark:text-emerald-100'
                       : 'text-slate-700 dark:text-slate-100'
@@ -354,38 +354,38 @@ const HijriMonthlyCalendar = ({
                 </span>
                 <div className="flex items-center gap-1">
                   {isDhulHijjahFirstTen && (
-                    <span className="flex h-4 w-6 items-center justify-center rounded-full bg-indigo-500/90 text-[9px] font-bold uppercase tracking-wide text-white shadow-sm dark:bg-indigo-400">
+                    <span className="flex h-3 w-4 items-center justify-center rounded-full bg-indigo-500/90 text-[7px] font-bold uppercase tracking-wide text-white shadow-sm sm:h-4 sm:w-6 sm:text-[9px] dark:bg-indigo-400">
                       {dhulHijjahDayCount}
                     </span>
                   )}
                   {isRamadanLastTen && (
-                    <span className="flex h-4 w-6 items-center justify-center rounded-full bg-sky-500/90 text-[9px] font-bold uppercase tracking-wide text-white shadow-sm dark:bg-sky-400">
+                    <span className="flex h-3 w-4 items-center justify-center rounded-full bg-sky-500/90 text-[7px] font-bold uppercase tracking-wide text-white shadow-sm sm:h-4 sm:w-6 sm:text-[9px] dark:bg-sky-400">
                       {ramadanDayCount}
                     </span>
                   )}
                   {isWhiteDay && (
-                    <span className="flex h-4 w-6 items-center justify-center rounded-full bg-amber-500/90 text-[10px] font-bold text-white shadow-sm dark:bg-amber-400">
+                    <span className="flex h-3 w-4 items-center justify-center rounded-full bg-amber-500/90 text-[8px] font-bold text-white shadow-sm sm:h-4 sm:w-6 sm:text-[10px] dark:bg-amber-400">
                       Wh
                     </span>
                   )}
                   {specialLabel && (
                     <Heart
-                      className="h-3.5 w-3.5 fill-rose-500 text-rose-500 dark:fill-rose-400 dark:text-rose-400"
+                      className="h-2.5 w-2.5 fill-rose-500 text-rose-500 sm:h-3.5 sm:w-3.5 dark:fill-rose-400 dark:text-rose-400"
                       aria-label={specialLabel}
                     />
                   )}
                 </div>
               </div>
               <div className="space-y-1">
-                <div className="h-1.5 w-full overflow-hidden rounded-full bg-slate-200 dark:bg-slate-800">
+                <div className="h-1 w-full overflow-hidden rounded-full bg-slate-200 sm:h-1.5 dark:bg-slate-800">
                   <div
-                    className="h-1.5 rounded-full bg-gradient-to-r from-emerald-500 to-teal-500"
+                    className="h-1 rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 sm:h-1.5"
                     style={{ width: `${requiredWidth}%` }}
                   />
                 </div>
-                <div className="h-1.5 w-full overflow-hidden rounded-full bg-slate-200 dark:bg-slate-800">
+                <div className="h-1 w-full overflow-hidden rounded-full bg-slate-200 sm:h-1.5 dark:bg-slate-800">
                   <div
-                    className="h-1.5 rounded-full bg-gradient-to-r from-amber-400 to-rose-400/90"
+                    className="h-1 rounded-full bg-gradient-to-r from-amber-400 to-rose-400/90 sm:h-1.5"
                     style={{ width: `${optionalWidth}%` }}
                   />
                 </div>
@@ -397,7 +397,7 @@ const HijriMonthlyCalendar = ({
       <div className="mt-4 flex flex-wrap items-center gap-4 text-xs text-slate-600 dark:text-slate-300">
         <div className="flex items-center gap-2">
           <span className="h-2 w-6 rounded-full bg-gradient-to-r from-emerald-500 to-teal-500" />
-          <span>Required habits</span>
+          <span>Main habits</span>
         </div>
         <div className="flex items-center gap-2">
           <span className="h-2 w-6 rounded-full bg-gradient-to-r from-amber-400 to-rose-400/90" />
